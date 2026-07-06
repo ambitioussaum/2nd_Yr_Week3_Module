@@ -1,0 +1,324 @@
+TOPIC- MERGE SORT AND QUICK SORT
+
+#include<iostream>
+#include<vector>
+using namespace std;
+
+//=================================================================================
+//TOPIC 1- Merge Sort
+//=================================================================================
+
+//---------------------------------------------------------------------------------
+//Question 1(Easy)-Rank student by Marks
+//---------------------------------------------------------------------------------
+void merge(vector<int>&Marks,int st,int mid,int end){
+    vector<int>temp;
+    int i=st;
+    int j=mid+1;
+    while(i<=mid && j<=end){
+        if(Marks[i]<=Marks[j]){
+            temp.push_back(Marks[i]);
+            i++;
+        }
+        else{
+            temp.push_back(Marks[j]);
+            j++;
+        }
+    }
+    while(i<=mid){
+        temp.push_back(Marks[i]);
+        i++;
+    }
+    while(j<=end){
+        temp.push_back(Marks[j]);
+        j++;
+    }
+    for(int idx=0;idx<temp.size();idx++){
+       Marks[st+i]=temp[i];
+        
+    }
+    }
+void mergesort(vector<int> &Marks,int st,int end){
+    if(st<end){
+        int mid=st+(end-st)/2;
+        mergesort(Marks, st ,mid);
+        mergesort(Marks,mid+1,end);
+        merge(Marks,st,mid,end);
+    }
+    }
+int main() {
+    int N;
+    if(!(cin>>N))
+    return 0;
+    vector<int> Marks(N);
+    for(int i=0;i<N;i++){
+        if(!(cin>> Marks[i]))
+		return 0;
+    }
+    mergesort(Marks,0,N-1);
+    for(int i=0;i<N;i++){
+        cout<< Marks[i] << " ";
+    }
+    cout<< endl;
+    return 0;
+    
+}
+//---------------------------------------------------------------------------------
+//Question 2(Easy)-Organizing Product Prices
+//---------------------------------------------------------------------------------
+
+void merge(vector<int>&Price,int st,int mid,int end){
+    vector<int>temp;
+    int i=st;
+    int j=mid+1;
+    while(i<=mid && j<=end){
+        if(Price[i]<=Price[j]){
+            temp.push_back(Price[i]);
+            i++;
+        }
+        else{
+            temp.push_back(Price[j]);
+            j++;
+        }
+    }
+    while(i<=mid){
+        temp.push_back(Price[i]);
+        i++;
+    }
+    while(j<=end){
+        temp.push_back(Price[j]);
+        j++;
+    }
+    for(int idx=0;idx<temp.size();idx++){
+        Price[st+idx]=temp[idx];
+        
+    }
+    }
+void mergesort(vector<int> &Price,int st,int end){
+    if(st<end){
+        int mid=st+(end-st)/2;
+        mergesort(Price,st,mid);
+        mergesort(Price,mid+1,end);
+        merge(Price,st,mid,end);
+    }
+    }
+int main() {
+    int N;
+    if(!(cin>>N))
+    return 0;
+    vector<int> Price(N);
+    for(int i=0;i<N;i++){
+    	if(!(cin>> Price[i]))
+		return 0;
+    }
+    mergesort(Price,0,N-1);
+    for(int i=0;i<N;i++){
+        cout<< Price[i] << " ";
+    }
+    cout<< endl;
+    return 0;
+    
+}
+
+//---------------------------------------------------------------------------------
+//Question 3(Medium)- Sort Employee Records by Salary
+//---------------------------------------------------------------------------------
+
+void merge(vector<int> &Salary,int st, int mid , int end){
+    vector<int> temp;
+    int i=st;
+    int j=mid+1;
+    while(i<=mid && j<=end){
+        if(Salary[i]<=Salary[j]){
+            temp.push_back(Salary[i]);
+            i++;
+        }
+        else{
+            temp.push_back(Salary[j]);
+            j++;
+        }
+    }
+    while(i<=mid){
+         temp.push_back(Salary[i]);
+            i++;
+    }
+    while(j<=end){
+         temp.push_back(Salary[j]);
+            j++;
+    }
+    for(int idx=0;idx<temp.size();idx++){
+        Salary[st+idx]=temp[idx];
+    }
+}
+void mergesort(vector<int> &Salary,int st,int end){
+    if(st<end){
+    int mid=st+(end-st)/2;
+    mergesort( Salary,st,mid);
+    mergesort(Salary,mid+1,end);
+    merge(Salary,st,mid,end);
+    }
+    
+}
+int main(){
+    int N;
+    if(!(cin>> N))
+    return 0;
+    vector<int> Salary(N);
+    for(int i=0;i<N;i++){
+        if(!(cin >> Salary[i]))
+        return 0;
+    }
+    mergesort(Salary, 0, N - 1);
+    for(int i=0;i<N;i++){
+        cout<< Salary[i]<<" ";
+    }
+    cout<< endl;
+    if(N>0){
+        cout<<"Lowest Salary: "<< Salary[0]<< endl;
+        cout<< "Highest Salary: "<<Salary[N-1]<< endl;
+        cout<<"Difference: "<< Salary[N-1]-Salary[0]<< endl;
+    }
+    return 0;
+}
+
+//=================================================================================
+//TOPIC 2- Quick Sort
+//=================================================================================
+
+//---------------------------------------------------------------------------------
+//Question 4(Easy)-  Race Timing Analysis
+//---------------------------------------------------------------------------------
+
+int partition(vector<int> &Time, int low ,int high){
+    int pivot=Time[high];
+    int i=low-1;
+    for(int j=low;j<high;j++){
+        if(Time[j]<=pivot){
+            i++;
+            swap(Time[i],Time[j]);
+        }
+    }
+    swap(Time[i+1],Time[high]);
+    return i+1;
+}
+void quicksort(vector<int> &Time,int low, int high){
+    if(low<high){
+        int idx=partition(Time,low,high);
+        quicksort(Time,low,idx-1);
+        quicksort(Time,idx+1,high);
+    }
+}
+int main(){
+    int N;
+    if(!(cin >> N))
+    return 0;
+    vector<int> Time(N);
+    for(int i=0;i<N;i++){
+        if(!(cin>> Time[i]))
+        return 0;
+    }
+    quicksort(Time,0,Time.size()-1);
+    for(int i=0;i<N;i++){
+        cout << Time[i] << " ";
+    
+    }
+    cout << endl;
+    return 0;
+}
+
+//---------------------------------------------------------------------------------
+//Question 5(Easy)- Organizing Library Book IDs
+//---------------------------------------------------------------------------------
+
+int partition(vector<int> &ID, int low ,int high){
+    int pivot=ID[high];
+    int i=low-1;
+    for(int j=low;j<high;j++){
+        if(ID[j]<=pivot){
+            i++;
+            swap(ID[i],ID[j]);
+        }
+    }
+    swap(ID[i+1],ID[high]);
+    return i+1;
+}
+void quicksort(vector<int> &ID,int low, int high){
+    if(low<high){
+        int idx=partition(ID,low,high);
+        quicksort(ID,low,idx-1);
+        quicksort(ID,idx+1,high);
+    }
+}
+int main(){
+    int N;
+    if(!(cin >> N))
+    return 0;
+    vector<int> ID(N);
+    for(int i=0;i<N;i++){
+        if(!(cin>> ID[i]))
+        return 0;
+    }
+    quicksort(ID,0,ID.size()-1);
+    for(int i=0;i<N;i++){
+        cout << ID[i] << " ";
+    
+    }
+    cout << endl;
+    return 0;
+}
+
+//---------------------------------------------------------------------------------
+//Question 6(Medium)- Online Store Sales Ranking
+//---------------------------------------------------------------------------------
+
+int partition(vector<int> &Sales, int low ,int high){
+    int pivot=Sales[high];
+    int i=low-1;
+    for(int j=low;j<high;j++){
+        if(Sales[j]<=pivot){
+            i++;
+            swap(Sales[i],Sales[j]);
+        }
+    }
+    swap(Sales[i+1],Sales[high]);
+    return i+1;
+}
+void quicksort(vector<int> &Sales,int low, int high){
+    if(low<high){
+        int idx=partition(Sales,low,high);
+        quicksort(Sales,low,idx-1);
+        quicksort(Sales,idx+1,high);
+    }
+}
+int main(){
+    int N ;
+    if(!(cin >> N))
+    return 0;
+    vector<int>Sales(N);
+    for(int i=0;i<N;i++){
+        if(!(cin>> Sales[i]))
+        return 0;
+    }
+    quicksort(Sales,0,Sales.size()-1);
+    for(int i=N-1;i>=0;i--){
+        cout << Sales[i] << " ";
+    
+    }
+    cout << endl;
+    double sum = 0;
+    int count = 0;
+    cout << "Top 3:";
+    for (int i = N - 1; i >= 0 && count < 3; i--) {
+        cout << Sales[i] << " ";
+        sum += Sales[i];
+        count++;
+    }
+    cout << endl;
+
+    if (count > 0) {
+        double average = sum / count;
+        cout << "Average" << ": " << average << endl;
+    }
+
+    return 0;
+}
